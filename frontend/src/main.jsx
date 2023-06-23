@@ -25,7 +25,7 @@ const authenticatedRoutes = [
   {
     path: 'projects/:projectId',
     element: <Project />
-  }
+  },
 ]
 
 const router = createBrowserRouter([

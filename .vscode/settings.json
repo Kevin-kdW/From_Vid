@@ -3,5 +3,6 @@
     },
     "emmet.includeLanguages":{
         "javascript":"javascriptreact"
-    }
+    },
+    "dotnet.defaultSolution": "backend\\backend.sln"
 }
