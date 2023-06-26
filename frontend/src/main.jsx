@@ -11,6 +11,8 @@ import { Register } from "./pages/register/Register";
 import { Login } from "./pages/login/Login";
 import { Project } from "./pages/project/Project";
 import { ProjectsLoader } from "./pages/projects/ProjectsLoader";
+import { ProjectLoader} from './pages/project/ProjectLoader';
+import { Store } from "./pages/store/Store";
 
 const authenticatedRoutes = [
   {
@@ -24,7 +26,12 @@ const authenticatedRoutes = [
   },
   {
     path: 'projects/:projectId',
-    element: <Project />
+    element: <Project />,
+    loader: ProjectLoader,
+  },
+  {
+    path: 'store',
+    element: <Store />,
   },
 ]
 

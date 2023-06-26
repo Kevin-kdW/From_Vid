@@ -1,5 +1,5 @@
-import { HStack, Link, Button } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+import { HStack,  Button } from "@chakra-ui/react";
+import { useNavigate,Link } from "react-router-dom";
 
 const routes = [
   {
@@ -18,6 +18,10 @@ const routes = [
     path: "login",
     display: "Login",
   },
+  {
+    path: "store",
+    display: "Store",
+  }
 ];
 
 export const Navbar = () => {

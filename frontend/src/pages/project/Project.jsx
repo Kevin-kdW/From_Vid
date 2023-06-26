@@ -2,7 +2,7 @@ import { useLoaderData } from "react-router-dom";
 import {
   Heading,
   Text,
-  VStack,
+  HStack,
   Card,
   CardHeader,
   CardFooter,
@@ -15,7 +15,7 @@ export const Project = () => {
     <div>
       <Heading textAlign={"center"}>{project.title}</Heading>
       <Text textAlign={"center"}>{project.description}</Text>
-      <VStack>
+      <HStack>
         {project.todos.map((todo) => {
           let color = "red";
           if (todo.status === 1) color = "green";
@@ -27,7 +27,7 @@ export const Project = () => {
             </Card>
           );
         })}
-      </VStack>
+      </HStack>
     </div>
   );
 };

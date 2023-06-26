@@ -5,62 +5,62 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using backend.Models;
+using API.Models;
 using backend.Data;
 
 namespace backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProjectController : ControllerBase
+    public class SockController : ControllerBase
     {
         private readonly DataContext _context;
 
-        public ProjectController(DataContext context)
+        public SockController(DataContext context)
         {
             _context = context;
         }
 
-        // GET: api/Project
+        // GET: api/Sock
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Project>>> GetProject()
+        public async Task<ActionResult<IEnumerable<Sock>>> GetSock()
         {
-          if (_context.Project == null)
+          if (_context.Sock == null)
           {
               return NotFound();
           }
-            return await _context.Project.ToListAsync();
+            return await _context.Sock.ToListAsync();
         }
 
-        // GET: api/Project/5
+        // GET: api/Sock/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Project>> GetProject(int id)
+        public async Task<ActionResult<Sock>> GetSock(int id)
         {
-          if (_context.Project == null)
+          if (_context.Sock == null)
           {
               return NotFound();
           }
-            var project = await _context.Project.FindAsync(id);
+            var sock = await _context.Sock.FindAsync(id);
 
-            if (project == null)
+            if (sock == null)
             {
                 return NotFound();
             }
 
-            return project;
+            return sock;
         }
 
-        // PUT: api/Project/5
+        // PUT: api/Sock/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutProject(int id, Project project)
+        public async Task<IActionResult> PutSock(int id, Sock sock)
         {
-            if (id != project.Id)
+            if (id != sock.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(project).State = EntityState.Modified;
+            _context.Entry(sock).State = EntityState.Modified;
 
             try
             {
@@ -68,7 +68,7 @@ namespace backend.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!ProjectExists(id))
+                if (!SockExists(id))
                 {
                     return NotFound();
                 }
@@ -81,44 +81,44 @@ namespace backend.Controllers
             return NoContent();
         }
 
-        // POST: api/Project
+        // POST: api/Sock
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Project>> PostProject(Project project)
+        public async Task<ActionResult<Sock>> PostSock(Sock sock)
         {
-          if (_context.Project == null)
+          if (_context.Sock == null)
           {
-              return Problem("Entity set 'DataContext.Project'  is null.");
+              return Problem("Entity set 'DataContext.Sock'  is null.");
           }
-            _context.Project.Add(project);
+            _context.Sock.Add(sock);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetProject", new { id = project.Id }, project);
+            return CreatedAtAction("GetSock", new { id = sock.Id }, sock);
         }
 
-        // DELETE: api/Project/5
+        // DELETE: api/Sock/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProject(int id)
+        public async Task<IActionResult> DeleteSock(int id)
         {
-            if (_context.Project == null)
+            if (_context.Sock == null)
             {
                 return NotFound();
             }
-            var project = await _context.Project.FindAsync(id);
-            if (project == null)
+            var sock = await _context.Sock.FindAsync(id);
+            if (sock == null)
             {
                 return NotFound();
             }
 
-            _context.Project.Remove(project);
+            _context.Sock.Remove(sock);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool ProjectExists(int id)
+        private bool SockExists(int id)
         {
-            return (_context.Project?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Sock?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

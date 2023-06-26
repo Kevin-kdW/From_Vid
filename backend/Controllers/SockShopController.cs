@@ -5,62 +5,62 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using backend.Models;
+using API.Models;
 using backend.Data;
 
 namespace backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AppUserController : ControllerBase
+    public class SockShopController : ControllerBase
     {
         private readonly DataContext _context;
 
-        public AppUserController(DataContext context)
+        public SockShopController(DataContext context)
         {
             _context = context;
         }
 
-        // GET: api/AppUser
+        // GET: api/SockShop
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<AppUser>>> GetAppUser()
+        public async Task<ActionResult<IEnumerable<SockShop>>> GetSockShop()
         {
-          if (_context.AppUser == null)
+          if (_context.SockShop == null)
           {
               return NotFound();
           }
-            return await _context.AppUser.ToListAsync();
+            return await _context.SockShop.ToListAsync();
         }
 
-        // GET: api/AppUser/5
+        // GET: api/SockShop/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<AppUser>> GetAppUser(int id)
+        public async Task<ActionResult<SockShop>> GetSockShop(int id)
         {
-          if (_context.AppUser == null)
+          if (_context.SockShop == null)
           {
               return NotFound();
           }
-            var appUser = await _context.AppUser.FindAsync(id);
+            var sockShop = await _context.SockShop.FindAsync(id);
 
-            if (appUser == null)
+            if (sockShop == null)
             {
                 return NotFound();
             }
 
-            return appUser;
+            return sockShop;
         }
 
-        // PUT: api/AppUser/5
+        // PUT: api/SockShop/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutAppUser(int id, AppUser appUser)
+        public async Task<IActionResult> PutSockShop(int id, SockShop sockShop)
         {
-            if (id != appUser.Id)
+            if (id != sockShop.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(appUser).State = EntityState.Modified;
+            _context.Entry(sockShop).State = EntityState.Modified;
 
             try
             {
@@ -68,7 +68,7 @@ namespace backend.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!AppUserExists(id))
+                if (!SockShopExists(id))
                 {
                     return NotFound();
                 }
@@ -81,44 +81,44 @@ namespace backend.Controllers
             return NoContent();
         }
 
-        // POST: api/AppUser
+        // POST: api/SockShop
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<AppUser>> PostAppUser(AppUser appUser)
+        public async Task<ActionResult<SockShop>> PostSockShop(SockShop sockShop)
         {
-          if (_context.AppUser == null)
+          if (_context.SockShop == null)
           {
-              return Problem("Entity set 'DataContext.AppUser'  is null.");
+              return Problem("Entity set 'DataContext.SockShop'  is null.");
           }
-            _context.AppUser.Add(appUser);
+            _context.SockShop.Add(sockShop);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetAppUser", new { id = appUser.Id }, appUser);
+            return CreatedAtAction("GetSockShop", new { id = sockShop.Id }, sockShop);
         }
 
-        // DELETE: api/AppUser/5
+        // DELETE: api/SockShop/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteAppUser(int id)
+        public async Task<IActionResult> DeleteSockShop(int id)
         {
-            if (_context.AppUser == null)
+            if (_context.SockShop == null)
             {
                 return NotFound();
             }
-            var appUser = await _context.AppUser.FindAsync(id);
-            if (appUser == null)
+            var sockShop = await _context.SockShop.FindAsync(id);
+            if (sockShop == null)
             {
                 return NotFound();
             }
 
-            _context.AppUser.Remove(appUser);
+            _context.SockShop.Remove(sockShop);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool AppUserExists(int id)
+        private bool SockShopExists(int id)
         {
-            return (_context.AppUser?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.SockShop?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

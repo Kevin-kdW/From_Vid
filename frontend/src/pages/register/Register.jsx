@@ -1,21 +1,45 @@
-import { Heading, Input, Button } from "@chakra-ui/react";
-import { useRef } from "react";
+import { Heading, Input, Button, Text } from "@chakra-ui/react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const Register = () => {
-  const userEmail = useRef();
+  const userName = useRef();
   const userPassword = useRef();
+
+  const [errorMessage, setErrorMessage] = useState('');
 
   const navigate = useNavigate();
 
   const HandleLogin = () => {
-    const email = userEmail.current.value;
+    const username = userName.current.value;
     const password = userPassword.current.value;
 
-    //TODO: handle user registration. Insert into db if valid
+    const request = {
+      username: username,
+      password: password,
+    };
 
-    console.log(`Created new user with email '${email}' and password '${password}'`)
-    navigate('/login');
+    fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/auth/register`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(request),
+    })
+      .then((response) => {
+        console.log(response)
+        if (response.ok) return response.json();
+      })
+      .then((body) => {
+        console.log(body);
+        if (body.errorMessage) 
+        {
+          console.log(body);
+          setErrorMessage(body.errorMessage)
+          return;
+        } 
+          navigate("/login");
+      });
   };
 
   return (
@@ -23,7 +47,8 @@ export const Register = () => {
       <Heading mb={10} textAlign={"center"}>
         Register
       </Heading>
-      <Input ref={userEmail} mb={10} type="email" placeholder="enter email" />
+      <Text color={'red'}>{errorMessage}</Text>
+      <Input ref={userName} mb={10} type="email" placeholder="enter email" />
       <Input
         ref={userPassword}
         mb={10}

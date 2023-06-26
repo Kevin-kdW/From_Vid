@@ -1,4 +1,4 @@
-import { CardHeader, Heading, VStack, Card, CardBody } from "@chakra-ui/react";
+import { CardHeader, Heading, HStack, Card, CardBody } from "@chakra-ui/react";
 import { useLoaderData, useNavigate } from "react-router-dom";
 
 export const Projects = () => {
@@ -12,18 +12,18 @@ export const Projects = () => {
   return (
     <div>
       <Heading textAlign={"center"}>Projects</Heading>
-      <VStack>
+      <HStack>
         {projects.map((project) => (
           <Card
             key={project.id}
             onClick={() => HandleSelectProject(project.id)}
-            _hover={{cursor: 'pointer'}}
+            _hover={{cursor: 'red'}}
           >
             <CardHeader>{project.title}</CardHeader>
             <CardBody>{project.description}</CardBody>
           </Card>
         ))}
-      </VStack>
+      </HStack>
     </div>
   );
 };

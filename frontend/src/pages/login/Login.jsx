@@ -1,23 +1,47 @@
-import { Heading, Input, Button } from "@chakra-ui/react";
-import { useRef } from "react";
+import { Heading, Input, Button, Text } from "@chakra-ui/react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const Login = () => {
-  const userEmail = useRef();
+  const userName = useRef();
   const userPassword = useRef();
+  
+  const [errorMessage, setErrorMessage] = useState('');
 
   const navigate = useNavigate();
 
   const HandleLogin = () => {
-    const email = userEmail.current.value;
+    const username = userName.current.value;
     const password = userPassword.current.value;
 
-    //TODO: handle user login. Take values and validate against DB.
-    //TODO: return token if valid
+    const request = {
+      username: username,
+      password: password,
+    };
+    fetch(`${import.meta.env.VITE_APP_BACKEND_URL}/auth/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(request),
+    })
+      .then((response) => {
+        if (response.ok) return response.json();
+      })
+      .then((body) => {
+        if (body.errorMessage) 
+        {
+          setErrorMessage(body.errorMessage)
+          return;
+        } 
+        else 
+        {
+          const token = body.token;
+          sessionStorage.setItem("token", token);
+          navigate("/");
 
-    const token = email + password;
-    sessionStorage.setItem('token', token);
-    navigate('/');
+        }
+      });
   };
 
   return (
@@ -25,7 +49,8 @@ export const Login = () => {
       <Heading mb={10} textAlign={"center"}>
         Login
       </Heading>
-      <Input ref={userEmail} mb={10} type="email" placeholder="enter email" />
+      <Text color={"red"}>{errorMessage}</Text>
+      <Input ref={userName} mb={10} type="email" placeholder="enter email" />
       <Input
         ref={userPassword}
         mb={10}

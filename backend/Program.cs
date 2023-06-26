@@ -1,4 +1,5 @@
 using backend.Data;
+using backend.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +13,10 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors();
+
+builder.Services.AddScoped<AuthService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -23,7 +28,12 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
+app.UseCors(options => options
+.AllowAnyHeader()
+.AllowAnyMethod() //post, put, get
+.WithOrigins("http://localhost:5173"));
+
+app.UseAuthentication().UseAuthorization();
 
 app.MapControllers();
 
